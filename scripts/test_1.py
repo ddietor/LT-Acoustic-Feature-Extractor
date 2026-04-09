@@ -1275,7 +1275,7 @@ while j < len(spl_time):
     plt.axhline(y=threshold,linestyle='-',color='red',linewidth=.7,label='Threshold (%.1f%%): %.1f dB' %(Dyn_thres*100,threshold))
     # plt.plot((t_split-t_split[0])[peaks_1],spl_time_split[peaks_1],marker='v',linestyle='None',color='black',linewidth=.7,label='Peaks')
     # plt.title('%s\nSPL$_{1/3 octave}$ %.1f Hz\nSPLIT (%f:%f)' %(spect_name,f,t_split[0],t_split[-1]))
-    plt.ylabel('SPL [dB re 1$\mu$Pa]')
+    plt.ylabel(r'SPL [dB re 1$\mu$Pa]')
     plt.xlabel('Time [s]')
     # plt.ylim(PSDmin,PSDmax)
     plt.legend()
