@@ -190,6 +190,7 @@ Pref = 1e-6 # [Pa]
 Vref = 1 # [V]
 FS_uPa = factor_scale * (Pref / Vref) * (1 / 10**(RVR_smo_onde_2/20)) * 1e6 #Full Scale in uPa
 print(f"Fs_uPa: {FS_uPa:.2f} uPa; Nbits: {Nbits}")
+
 # %% wav_io application:
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
@@ -299,11 +300,7 @@ tspect,fspect,psd,spect_info = spectrogram_analysis_nfft(signal_uPa,fs,NFFT=NFFT
 tspect = tspect + signal_t[0]
 _,tbin,fbin,fvalid,_ = spect_info
  
-PSD_high = np.column_stack([np.append(np.nan,fspect),np.vstack([tspect,psd])])
-fspect_high = fspect.copy()
-
 SpectName = FileName + '_PSDdata'
-
 # %% Spectrogram HF representation:
 PSDmin,PSDmax = 30,140 # [dB re 1uPa^2/Hz]
 plt.ioff() # Turn interactive plotting off
@@ -318,6 +315,8 @@ c_map = plt.colormaps['jet']
 Nvalid = np.where(fspect >= fvalid)[0][0]
 fspect = fspect[Nvalid:]
 psd = psd[Nvalid:,:]
+PSD_high = np.column_stack([np.append(np.nan,fspect),np.vstack([tspect,psd])])
+fspect_high = fspect.copy()
 if max(fspect)<=5e3:
     plt.pcolormesh(taxis2plt, fspect, psd, cmap=c_map, vmin=PSDmin, vmax=PSDmax)
     # plt.axhline(fvalid,color='black',linestyle='--',linewidth=4)
@@ -646,8 +645,6 @@ tspect,fspect,psd,spect_info = spectrogram_analysis_nfft(signal_resamp,fs_resamp
 tspect = tspect + signal_t[0]
 _,tbin,fbin,fvalid,_ = spect_info
 
-PSD_low = np.column_stack([np.append(np.nan,fspect),np.vstack([tspect,psd])])
-
 # %% Spectrogram LF representation (low_PSDdata):
 SpectName = FileName + '_low_PSDdata'
 plt.ioff() # Turn interactive plotting off
@@ -662,6 +659,8 @@ c_map = plt.colormaps['jet']
 Nvalid = np.where(fspect >= fvalid)[0][0]
 fspect = fspect[Nvalid:]
 psd = psd[Nvalid:,:]
+PSD_low = np.column_stack([np.append(np.nan,fspect),np.vstack([tspect,psd])])
+fspect_low = fspect.copy()
 if max(fspect)<=5e3:
     plt.pcolormesh(taxis2plt, fspect, psd, cmap=c_map, vmin=PSDmin, vmax=PSDmax)
     plt.axhline(f_antialiasign,color='black',linestyle='--',linewidth=4)
@@ -783,6 +782,8 @@ psd_pctl90 = np.nanpercentile(psd,90,axis=1)
 psd_pctl95 = np.nanpercentile(psd,95,axis=1)
 psd_pctl98 = np.nanpercentile(psd,98,axis=1)
 psd_pctl99 = np.nanpercentile(psd,99,axis=1)
+
+psd_mean_low = psd_mean.copy()  
 
 # Create a DataFrame
 psd_cum = pd.DataFrame({
@@ -906,11 +907,10 @@ if save_low_SPLdataCum_csv:
     
 
 # %% Spectrosum PSD combined:
-ERROR  
 PSDcomparisson = FileName + '_SPLdata_mean'
 plt.ioff() # Turn interactive plotting off
 fig = plt.figure(figsize=(14,8))
-plt.plot(fspect, psd_mean, color=[0.3, 0.75, 0.93], label='Low freq.', linewidth = 4)
+plt.plot(fspect_low, psd_mean_low, color=[0.3, 0.75, 0.93], label='Low freq.', linewidth = 4)
 plt.plot(fspect_high, psd_mean_high, color=[0.77, 0.43, 0.84], label='High freq.', linewidth = 4)
 plt.axvline(f_antialiasign,color='black',linestyle='--',linewidth=3)
 plt.legend(ncol=4, loc='upper center', fontsize=FontSize-2)
@@ -1113,7 +1113,7 @@ def signalReaderSPLdata(CSVfile, freq, octave_band, plotter=False):
     '''
     # Read CSV data
     try:
-        CSVdata = pd.read_csv(CSVfile,index_col=None,header=None,sep=';')
+        CSVdata = pd.read_csv(CSVfile,index_col=None,sep=';')
     except Exception as e:
         raise Exception(f"Error reading CSV file '{CSVfile}': {e}")
     
@@ -1187,7 +1187,7 @@ def dBsum(dBs, log_base=10, axis=0):
     return log_base * np.log10(linear_sum)
 
 # %% 
-CSVfile = r'C:\Users\Didac\Documents\ddietor\LT-Acoustic-Feature-Extractor\scripts\results_test\onde2_0_0_3_17_02_26_00h_15_low_SPLdata_cum.csv'
+CSVfile = r'C:\Users\Didac\Documents\ddietor\LT-Acoustic-Feature-Extractor\scripts\results_test\onde2_0_0_3_17_02_26_00h_15_low_SPLdata.csv'
 freq2study = np.array([0,30])
 octave_band = 1/3
 
@@ -1209,6 +1209,7 @@ for freq in octaves:
 spl_matrix = np.array(spl_matrix)
 
 spl_sum = dBsum(spl_matrix,log_base=20, axis=0)
+
 
 # %% Analysis SPL for a single 1/3 octaves:
 from scipy.signal import butter, filtfilt
@@ -1270,19 +1271,19 @@ while j < len(spl_time):
     peaks_1, _ = scp.signal.find_peaks(spl_time_split, height=Amp_median+thres, threshold=None, distance=Nw, prominence=None, width=None)
     peaks_2, _ = scp.signal.find_peaks(spl_time_split, height=threshold, threshold=None, distance=Nw, prominence=None, width=None)
     
-    plt.figure()
-    plt.plot(t_split-t_split[0],spl_time_split)
-    # plt.axhline(y=Amp_median,linestyle='--',color='red',linewidth=.7,label='Median: %.1f dB' %Amp_median)
-    # plt.axhline(y=Amp_median+thres,linestyle='-',color='red',linewidth=.7,label='Threshold +%.1f dB' %thres)
-    plt.axhline(y=threshold,linestyle='-',color='red',linewidth=.7,label='Threshold (%.1f%%): %.1f dB' %(Dyn_thres*100,threshold))
-    # plt.plot((t_split-t_split[0])[peaks_1],spl_time_split[peaks_1],marker='v',linestyle='None',color='black',linewidth=.7,label='Peaks')
-    # plt.title('%s\nSPL$_{1/3 octave}$ %.1f Hz\nSPLIT (%f:%f)' %(spect_name,f,t_split[0],t_split[-1]))
-    plt.ylabel(r'SPL [dB re 1$\mu$Pa]')
-    plt.xlabel('Time [s]')
-    # plt.ylim(PSDmin,PSDmax)
-    plt.legend()
-    plt.tight_layout()
-    plt.show()
+    # plt.figure()
+    # plt.plot(t_split-t_split[0],spl_time_split)
+    # # plt.axhline(y=Amp_median,linestyle='--',color='red',linewidth=.7,label='Median: %.1f dB' %Amp_median)
+    # # plt.axhline(y=Amp_median+thres,linestyle='-',color='red',linewidth=.7,label='Threshold +%.1f dB' %thres)
+    # plt.axhline(y=threshold,linestyle='-',color='red',linewidth=.7,label='Threshold (%.1f%%): %.1f dB' %(Dyn_thres*100,threshold))
+    # # plt.plot((t_split-t_split[0])[peaks_1],spl_time_split[peaks_1],marker='v',linestyle='None',color='black',linewidth=.7,label='Peaks')
+    # # plt.title('%s\nSPL$_{1/3 octave}$ %.1f Hz\nSPLIT (%f:%f)' %(spect_name,f,t_split[0],t_split[-1]))
+    # plt.ylabel(r'SPL [dB re 1$\mu$Pa]')
+    # plt.xlabel('Time [s]')
+    # # plt.ylim(PSDmin,PSDmax)
+    # plt.legend()
+    # plt.tight_layout()
+    # plt.show()
     
     Npeaks.append(Nini + np.intersect1d(peaks_1,peaks_2))
     SNRpeaks.append(spl_time_split[np.intersect1d(peaks_1,peaks_2)]-Amp_median)
@@ -1292,7 +1293,8 @@ Npeaks, indxs = np.unique(Npeaks_combined, return_index=True)
 SNRpeaks_combined = np.concatenate(SNRpeaks, axis=0)
 SNRpeaks = SNRpeaks_combined[indxs]
 
-plt.figure(figsize=(14,6))
+plt.ioff() # Turn interactive plotting off
+plt.figure(figsize=(14,8))
 ax=plt.gca()
 xfmt=md.DateFormatter(XlabelFormat)
 ax.xaxis.set_major_formatter(xfmt)
@@ -1316,7 +1318,9 @@ for i, peak_index in enumerate(Npeaks):
                 ha='center',  # Horizontal alignment
                 va='bottom')  # Vertical alignment (position the text above the point)
 
-plt.title(r'%s. SPL$_{sum.}$\nSearching events between %.1f and %.1f Hz of %.1f s in %.1f s windows (overlap: %.1f). Th: %.1f dB + %.1f %%' %(FileName,freq2study[0],freq2study[1], Tw, Tw_mean,overlap,thres, Dyn_thres*100), fontsize=FontSize)
+plt.title('%s. SPL$_{sum.}$\nSearching events between %.1f and %.1f Hz of %.1f s in %.1f s windows (overlap: %.1f). Th: %.1f dB + %.1f %%'
+          % (FileName, freq2study[0], freq2study[1], Tw, Tw_mean, overlap, thres, Dyn_thres*100),
+          fontsize=FontSize)
 plt.ylabel(r'SPL [dB re 1$\mu$Pa]', fontsize=FontSize)
 # plt.ylim(PSDmin,PSDmax)
 plt.legend(fontsize=FontSize-2)
@@ -1324,5 +1328,9 @@ plt.xticks(rotation=0)
 plt.tick_params(axis='both', which='major', labelsize=FontSize)
 plt.tick_params(axis='both', which='minor', labelsize=FontSize)
 plt.tight_layout()
-plt.show()
+# plt.show()
+SPLsum = FileName + '_low_SPLsum'
+plt.savefig(os.path.join(datapath2save,SPLsum+'.png'), bbox_inches='tight', dpi = 150)    
+plt.close('all')
+
 # %%
