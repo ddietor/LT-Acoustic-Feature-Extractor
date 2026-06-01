@@ -329,7 +329,7 @@ else:
     plt.ylim(fvalid*1e-3,fspect[-1]*1e-3)
 plt.title(FileName)
 # plt.title('%s\n%i-NFFT (overlap: %i%% ; f$_{ok}\geq$%i Hz)' %(FileName,NFFT,int(over*100),fvalid))
-plt.title(r'%s\n%i-NFFT (overlap: %i%%)' %(FileName,NFFT,int(over*100)), fontsize=FontSize+2)
+plt.title(r'%s\n%i-NFFT (overlap: %i%%)' %(FileName,NFFT,int(overlap_bin*100)), fontsize=FontSize+2)
 cbar = plt.colorbar()
 cbar.set_label(r'PSD [dB re 1$\mu$Pa$^2$/Hz]', rotation=270, verticalalignment='baseline', fontsize=FontSize)
 cbar.ax.tick_params(labelsize=FontSize)
