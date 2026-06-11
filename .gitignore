@@ -12,7 +12,8 @@ venv.bak/
 
 # Data / test folders
 **/data_test/
-**/results_test/
+**/tests/
+**/results/
 
 # Logs and temporary files
 *.log
