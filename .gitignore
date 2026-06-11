@@ -12,7 +12,7 @@ venv.bak/
 
 # Data / test folders
 **/data_test/
-**/tests/
+**/tests_scripts/
 **/results/
 
 # Logs and temporary files

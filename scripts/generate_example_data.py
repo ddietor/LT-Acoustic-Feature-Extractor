@@ -18,7 +18,6 @@ import json
 import numpy as np
 import scipy as scp
 
-from scripts.tests.test_1 import RVR_smo_onde_2
 from src.wav_io import wav_creator
 
 SCRIPT_NAME = "generate_example_data"
