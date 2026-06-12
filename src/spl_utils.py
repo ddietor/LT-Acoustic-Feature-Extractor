@@ -61,7 +61,58 @@ def OctaveBandsCalculation(fs,octave=1):
        
     return OctaveBands 
 
-# %% pltSPL function:
+# %% spl_calculation function:
+def spl_calculation(tspect,fspect,psd,OctaveBands):
+    '''
+    Calculate 1/n-octave band SPL from a PSD matrix.
+
+    Summary:
+    This function integrates a power spectral density (PSD) over predefined
+    octave or 1/n-octave frequency bands to compute sound pressure levels (SPL)
+    as a function of time. The integration is performed in the linear domain
+    and converted back to dB. Bands with no valid frequency bins are removed.
+
+    Parameters:
+    - tspect (array-like): Time vector [s] or time bins associated with PSD.
+    - fspect (array-like): Frequency vector [Hz] corresponding to PSD rows.
+    - psd (2D numpy.ndarray): PSD matrix in dB, shape (n_frequencies, n_times).
+    - OctaveBands (pandas.DataFrame): Table containing at least:
+        * 'fini' (float): Lower frequency bound of each band [Hz]
+        * 'fend' (float): Upper frequency bound of each band [Hz]
+
+    Returns:
+    - spl (numpy.ndarray): SPL per band and time, shape (n_valid_bands, n_times)
+
+    Example:
+    spl = spl_calculation(tspect=tspect,fspect=fspect,psd=psd,OctaveBands=OctaveBands)
+
+    Notes:
+    - Integration is performed assuming uniform frequency spacing.
+    - PSD is converted from dB to linear scale before integration.
+    - Bands with no matching frequency bins are removed from the output.
+    - Output retains band ordering after filtering invalid rows.
+
+    Created/Last modified: 2026-06-12
+    '''
+    spl = np.ones((len(OctaveBands),len(tspect)))*np.nan
+    fbin = fspect[1]-fspect[0]
+    row2del = []
+    for j in range(len(OctaveBands)):
+        row = OctaveBands.iloc[j]
+        fini = row['fini']
+        fend = row['fend']
+        indxs = np.where((fspect >= fini) & (fspect <= fend))[0]
+        if len(indxs)>1:
+            spl[j,:] = 10*np.log10(np.sum(10**(psd[indxs,:]/10)*fbin, axis=0))
+        elif len(indxs)==1: 
+            spl[j,:] = 10*np.log10(10**(psd[indxs,:]/10)*fbin)
+        elif len(indxs)==0:
+            row2del.append(j)
+    if len(row2del)>0:
+        spl = np.delete(spl, row2del, axis=0)
+        OctaveBands = OctaveBands.drop(row2del)
+    return spl
+
 # %% pltOctaveSPL function
 def pltSPL(spl, tspect, OctaveBands, FileName='', SPLmin=None, SPLmax=None, FontSize=12, c_map='jet', path2save=None, filename=None):
     """
