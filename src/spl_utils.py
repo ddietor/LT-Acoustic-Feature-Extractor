@@ -2,15 +2,11 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
 import datetime as dt
 import matplotlib.dates as md
 import pandas as pd
-import scipy as scp
-import matplotlib.patches as patches
 import warnings
 
-from matplotlib import mlab
 
 # %% OctaveBandCalculation function:
 def OctaveBandCalculation(freq,octave=1):

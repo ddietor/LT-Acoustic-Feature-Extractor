@@ -5,7 +5,6 @@ import numpy as np
 from pathlib import Path
 from scipy.io import wavfile
 from typing import Optional, Tuple, Dict
-from pathlib import Path
 
 # %% wav_creator() function: 
 def wav_creator(

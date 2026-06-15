@@ -14,7 +14,6 @@ The output is fully reproducible when using the default random seed.
 import argparse
 import logging
 import os
-import json
 import numpy as np
 import scipy as scp
 
@@ -144,13 +143,13 @@ def run():
     Vref = 1 # [V]
     FS_uPa = factor_scale * (Pref / Vref) * (1 / 10**(RVR_hydro/20)) * 1e6 #Full Scale in uPa
 
-    metadata = {
-        "description": "Signal Test",
-        "duration_s": duration,
-        "fs_Hz": fs,
-        "Nbits": Nbits,
-        "FS_uPa": FS_uPa,
-    }
+    # metadata = {
+    #     "description": "Signal Test",
+    #     "duration_s": duration,
+    #     "fs_Hz": fs,
+    #     "Nbits": Nbits,
+    #     "FS_uPa": FS_uPa,
+    # }
 
     wav_creator(
         signal_uPa,
