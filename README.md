@@ -58,7 +58,7 @@ The notebook first imports external dependencies and internal modules from `src/
 Then, a synthetic acoustic signal is generated using the script `scripts/generate_example_data.py` and saved as a WAV in the `outputs` directory.
  
 
-This signal emulates an experimental 5-min hydrophone recording with low-frequency spike (occurring below the 31 Hz third-octave band and lasting around 15 s in duration) by SMO-O𝜈DE-2 station.
+This signal emulates an experimental 5-minute hydrophone recording from the SMO-O𝜈DE-2 station, featuring a low-frequency spike that occurs below the 31 Hz third-octave band and lasts approximately 15 seconds.
 
 ---
 
