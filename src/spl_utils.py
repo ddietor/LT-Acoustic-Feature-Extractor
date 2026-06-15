@@ -8,8 +8,56 @@ import matplotlib.dates as md
 import pandas as pd
 import scipy as scp
 import matplotlib.patches as patches
+import warnings
 
 from matplotlib import mlab
+
+# %% OctaveBandCalculation function:
+def OctaveBandCalculation(freq,octave=1):
+    '''
+    Calculate the central frequency and frequency bounds for the specified frequency within an octave band.
+
+    Extended description:
+    This function calculates the central frequency and frequency bounds (lower and upper) for a given frequency
+    within an octave band. 
+
+    Parameters:
+    - freq (float): The frequency for which to calculate the octave band [Hz].
+    - octave (float, optional): Value of the octave band. Default is 1.
+
+    Returns:
+    - fc (float): Central frequency of the octave band in which the specified frequency falls [Hz].
+    - f_low (float): Lower bound of the octave band [Hz].
+    - f_up (float): Upper bound of the octave band [Hz].
+
+    Application:
+    fc, f_low, f_up = OctaveBandCalculation(freq, octave=1/3)
+
+    Created/Last modified: 2025-01-17
+    '''
+    # Function implementation goes here    
+    # fini = 12.401570718501562
+    # fini = 9.843133202303695
+    # fini = 7.812499999999999
+    # fini = 6.200785359250778
+    # fini = 4.921566601151848
+    fini = 3.9062499999999996
+    f_low = fini/np.sqrt(2**octave)
+    f_up = fini*np.sqrt(2**octave)
+    
+    if freq < fini:
+        freq = fini
+        warnings.warn("WARNING from OctaveBandCalculation(): freq < fini. Solution: freq=fini")
+    
+    Nbands = 55
+    fcs = (fini*((2**(octave))**(np.arange(0, Nbands))))
+    for fc in fcs: 
+        f_low = fc/np.sqrt(2**octave)
+        f_up = fc*np.sqrt(2**octave)    
+        if freq >= f_low and freq <= f_up :
+            break
+       
+    return fc,f_low,f_up 
 
 # %% OctaveBandsCalculation function:
 def OctaveBandsCalculation(fs,octave=1):
@@ -175,3 +223,69 @@ def pltSPL(spl, tspect, OctaveBands, FileName='', SPLmin=None, SPLmax=None, Font
         plt.savefig(os.path.join(path2save, filename+'.png'), bbox_inches='tight', dpi=150)
 
     plt.show()
+
+# %% signalReaderSPLdata function:   
+def signalReaderSPLdata(CSVfile, freq, octave_band, plotter=False):
+    '''
+    Reads a CSV file containing sound pressure level (SPL) data and extracts the SPL data corresponding to a given frequency.
+
+    Parameters:
+    - CSVfile (str): Path to the CSV file containing SPL data. The file should have time data in the first row and SPL data in subsequent rows.
+    - freq (float): The frequency (Hz) for which the SPL data is to be extracted.
+    - octave (float): Value of the octave band used in the CSVfile data. 
+    - plotter (bool, optional): If True, plot the result. Default is False.
+
+    Returns:
+    - time_read (numpy.ndarray): Time array corresponding to the first row in the CSV file [s].
+    - freq_read (float): The frequency (Hz) that corresponds to the given frequency within the specified octave band.
+    - spl_read (numpy.ndarray): The SPL values corresponding to the frequency in `freq_read` [µPa].
+
+    Application:
+    time_read, freq_read, spl_read = signalReaderSPLdata(CSVfile, freq, octave_band)
+
+    Example usage:
+    time_read, freq_read, spl_read = signalReaderSPLdata(CSVfile, freq, octave_band)
+    
+    Created/Last modified: 2024-12-13
+    '''
+    # Read CSV data
+    try:
+        CSVdata = pd.read_csv(CSVfile,index_col=None,sep=';')
+    except Exception as e:
+        raise Exception(f"Error reading CSV file '{CSVfile}': {e}")
+    
+    # Extract time data (assumed to be in the second column onward)
+    time_read = CSVdata.iloc[0, 1:].to_numpy()
+
+    # Loop through frequencies and find matching band
+    freq_read, spl_read = None, None  # Default values in case no match is found
+    for indx, f in enumerate(CSVdata.iloc[1:, 0].to_numpy()):  # Assuming first column has the frequencies
+        fc, fmin, fmax = OctaveBandCalculation(f, octave=octave_band)
+        
+        if freq >= fmin and freq <= fmax:
+            freq_read = CSVdata.iloc[indx + 1, 0]  # Read the frequency value
+            spl_read = CSVdata.iloc[indx + 1, 1:].to_numpy()  # SPL values for this frequency
+            break  # Exit loop once we find the match
+    
+    # If no match is found, raise an exception
+    if freq_read is None or spl_read is None:
+        raise Exception(f"No data found for frequency {freq} Hz in the given octave band.")
+    
+    if plotter: 
+        plt.figure()
+        plt.xticks(rotation=15)
+        ax=plt.gca()
+        xfmt=md.DateFormatter('%Y-%m-%d %H:%M:%S.%f')
+        ax.xaxis.set_major_formatter(xfmt)
+        taxis2plt=[dt.datetime.fromtimestamp(ts) for ts in time_read]
+        plt.plot(taxis2plt, spl_read, color='blue')
+        if octave_band == 1/3:
+            plt.title(r'%s\nSPL$_{1/3 octave}$ %.1f Hz' %(os.path.basename(CSVfile),freq_read))
+        else:
+            plt.title(r'%s\nSPL$_{%f octave}$ %.1f Hz' %(os.path.basename(CSVfile),octave_band,freq_read))
+        plt.ylabel(r'SPL [dB re 1$\mu$Pa]')
+        plt.tight_layout()
+        plt.show()
+    
+    
+    return time_read, freq_read, spl_read

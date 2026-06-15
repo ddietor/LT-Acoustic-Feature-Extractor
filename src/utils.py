@@ -137,6 +137,7 @@ def representate_cumulative_stats(data_cum,
         data_cum['Mean'],
         color='gold',
         linewidth=3,
+        linestyle = '--',
         label='Mean',
         zorder=100
     )
@@ -255,3 +256,68 @@ def fs_factor(fs, fmax_sel):
         fs_new = fs / factor
 
     return factor, fs_new
+
+# %% dBsum function:
+def dBsum(dBs, log_base=10, axis=0):
+    '''
+    Calculate the sum of an array of dB values in the logarithmic domain, supporting multi-dimensional arrays.
+
+    Summary:
+    This function converts an array of dB values to the linear scale, computes their sum along the specified axis,
+    and converts the result back to dB. The `log_base` parameter allows flexibility for different types of dB calculations 
+    (e.g., power ratio with log_base=10 or sound pressure with log_base=20).
+
+    Parameters:
+    - dBs (numpy.ndarray): An array of decibel values to be summed.
+    - log_base (int or float): The logarithm base to use for the conversion. Default is 10.
+    - axis (int): The axis along which to compute the sum. Default is 0 (sum across columns).
+
+    Returns:
+    - numpy.ndarray: The sum value in decibels along the specified axis.
+
+    Example:
+    total_dB = dBsum(np.array([60, 62, 58, 61]), log_base=20) # For 1D array
+    total_dB = dBsum(np.array([[60, 62], [58, 61]]), log_base=20, axis=0) # For 2D array
+
+    Created/Last modified: 2024-12-14
+    '''
+    # Convert the dB values to linear scale
+    linear_values = 10 ** (dBs / log_base)
+    
+    # Compute the sum along the specified axis
+    linear_sum = np.sum(linear_values, axis=axis)
+    
+    # Convert the result back to dB
+    return log_base * np.log10(linear_sum)
+
+# %% 
+def curveReaderPSDdataCum(csv_file, column='Mean'):
+    """
+    Lee PSDdata_cum.csv y devuelve frecuencia y la curva seleccionada.
+
+    Parameters
+    ----------
+    csv_file : str
+        Ruta al CSV.
+    column : str
+        'Mean', 'PCTL25', 'PCTL50', 'PCTL75', 'PCTL90' o 'PCTL95'.
+
+    Returns
+    -------
+    freq : np.ndarray
+        Frecuencias (Hz).
+    psd : np.ndarray
+        Valores de la columna seleccionada.
+    """
+    
+    df = pd.read_csv(csv_file, sep=';')
+
+    if column not in df.columns:
+        raise ValueError(
+            f"'{column}' no existe. Opciones: {list(df.columns[1:])}"
+        )
+
+    freq = df['Freq_Hz'].to_numpy()
+    psd = df[column].to_numpy()
+
+    return freq, psd
