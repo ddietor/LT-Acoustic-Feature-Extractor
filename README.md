@@ -96,3 +96,12 @@ LT_Acoustic_Feature_Extractor
 └── results/
 
 ```
+
+---
+
+## To do list:
+```
+- WAV creation for the decimated signal example (as suggested in the article)
+
+- Improve the structure of LT_Acoustic_Feature_Extractor.ipynb to compute PSD and SPL (and derived metrics) for both high- and low-frequency analyses, and then display the figures side by side. This will reduce the vertical space required in the notebook output preview.
+```
