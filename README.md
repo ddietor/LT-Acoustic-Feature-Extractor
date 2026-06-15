@@ -42,9 +42,7 @@ This notebook serves as the main entry point of the project and executes all fun
 
 The processing pipeline implemented in this repository follows the workflow shown below:
 
-<a href="https://www.mdpi.com/2077-1312/13/3/454">
-  <img src="https://www.mdpi.com/jmse/jmse-13-00454/article_deploy/html/images/jmse-13-00454-g002.png" width="600">
-</a>
+[![Proposed space-saving workflow for long-term acoustic monitoring data](https://www.mdpi.com/jmse/jmse-13-00454/article_deploy/html/images/jmse-13-00454-g002.png)](https://www.mdpi.com/2077-1312/13/3/454)
 
 
 
