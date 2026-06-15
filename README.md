@@ -6,6 +6,31 @@ Diego-Tortosa, D.; Bonanno, D.; Bou-Cabo, M.; Di Mauro, L. S.; Idrissi, A.; Lara
 
 If you use this repository in your research, a citation to this article would be appreciated.
 
+## Requirements
+After cloning the repository:
+```
+git clone https://github.com/ddietor/LT-Acoustic-Feature-Extractor.git
+cd LT-Acoustic-Feature-Extractor
+```
+
+Python >= 3.11 is required. It is recommended to use a virtual environment:
+```bash
+# Create virtual environment:
+python -m venv venv
+
+# Activate environment (Linux / macOS):
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Upgrade pip and install dependencies:
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+Install dependencies using pip:
+
+```bash
+pip install -r requirements.txt
+```
 
 ## Main notebook
 
@@ -18,9 +43,6 @@ This notebook serves as the main entry point of the project and executes all fun
 The processing pipeline implemented in this repository follows the workflow shown below:
 
 [![Proposed space-saving workflow for long-term acoustic monitoring data](https://www.mdpi.com/jmse/jmse-13-00454/article_deploy/html/images/jmse-13-00454-g002.png)](https://www.mdpi.com/2077-1312/13/3/454)
-
-
-
 
 
 
@@ -104,4 +126,6 @@ LT_Acoustic_Feature_Extractor
 - WAV creation for the decimated signal example (as suggested in the article)
 
 - Improve the structure of LT_Acoustic_Feature_Extractor.ipynb to compute PSD and SPL (and derived metrics) for both high- and low-frequency analyses, and then display the figures side by side. This will reduce the vertical space required in the notebook output preview.
+
+- Refactor and reorganize the functions in src/ to better group them by functionality and improve code maintainability.
 ```
