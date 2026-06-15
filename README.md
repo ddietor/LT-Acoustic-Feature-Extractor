@@ -83,7 +83,7 @@ This section combines results from the previous analyses to generate:
 
 ---
 
-### 4. - Section 4: Post-Processing. The Event Detection Phase from low-frequency SPL
+### - Section 4: Post-Processing. The Event Detection Phase from low-frequency SPL
 
 The final section demonstrates an automatic event detection procedure based on low-frequency SPL data (`low_SPLdata`). This reproduces the concept shown in **[Figure 10](https://www.mdpi.com/jmse/jmse-13-00454/article_deploy/html/images/jmse-13-00454-g010.png)** of the paper.
 
