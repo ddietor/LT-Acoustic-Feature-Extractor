@@ -34,11 +34,7 @@ This notebook serves as the main entry point of the project and executes all fun
 
 ## Workflow overview (Section 1 and Section 2)
 
-The processing pipeline implemented in this repository follows the workflow shown below:
-
-[![Proposed space-saving workflow for long-term acoustic monitoring data](https://www.mdpi.com/jmse/jmse-13-00454/article_deploy/html/images/jmse-13-00454-g002.png)](https://www.mdpi.com/2077-1312/13/3/454)
-
-
+The processing pipeline implemented in this repository follows the workflow shown in **[Figure 2](https://www.mdpi.com/jmse/jmse-13-00454/article_deploy/html/images/jmse-13-00454-g002.png)** of the paper.
 
 ---
 
