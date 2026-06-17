@@ -26,12 +26,6 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-Install dependencies using pip:
-
-```bash
-pip install -r requirements.txt
-```
-
 ## Main notebook
 
 The complete workflow is implemented in `LT_Acoustic_Feature_Extractor.ipyn`. 
