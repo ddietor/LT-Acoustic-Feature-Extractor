@@ -4,6 +4,7 @@ import mutagen
 import numpy as np
 from pathlib import Path
 from scipy.io import wavfile
+import warnings
 from typing import Optional, Tuple, Dict
 
 # %% wav_creator() function: 
@@ -93,7 +94,7 @@ def wav_creator(
 
 # %% wav_reader() function: 
 def wav_reader(
-            wavFile: str,
+    wavFile: str,
     Nbits: int = 32,
     FS_uPa: Optional[float] = None,
 ) -> Tuple[np.ndarray, int, Optional[str]]:
@@ -121,6 +122,10 @@ def wav_reader(
     """
 
     wav_path = Path(wavFile)
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", wavfile.WavFileWarning)
+        fs, signal_samples = wavfile.read(str(wav_path))
 
     # Read WAV
     fs, signal_samples = wavfile.read(str(wav_path))

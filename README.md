@@ -14,14 +14,16 @@ cd LT-Acoustic-Feature-Extractor
 ```
 
 Python >= 3.11 is required. It is recommended to use a virtual environment:
-```bash
+```
 # Create virtual environment:
 python -m venv venv
 
 # Activate environment (Linux / macOS):
 source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-# Upgrade pip and install dependencies:
+Upgrade pip and install dependencies:
+```bash
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
@@ -69,11 +71,11 @@ This section combines results from the previous analyses to generate:
 
 - Full-band PSD representation (spectrogram-like visualization)
 - Full-band SPL representation
-- Combined `PSDdata_cum` visualization (equivalent utput to **[Figure 11](https://www.mdpi.com/jmse/jmse-13-00454/article_deploy/html/images/jmse-13-00454-g011.png)** of the paper)
+- Combined `PSDdata_cum` visualization (equivalent output to **[Figure 11](https://www.mdpi.com/jmse/jmse-13-00454/article_deploy/html/images/jmse-13-00454-g011.png)** of the paper)
 
 ---
 
-### - Section 4: Post-Processing. The Event Detection Phase from low-frequency SPL
+### - Section 4: Post-Processing. The Event Detection Phase from the SPL data
 
 The final section demonstrates an automatic event detection procedure based on low-frequency SPL data (`low_SPLdata`). This reproduces the concept shown in **[Figure 10](https://www.mdpi.com/jmse/jmse-13-00454/article_deploy/html/images/jmse-13-00454-g010.png)** of the paper.
 
@@ -113,8 +115,6 @@ LT_Acoustic_Feature_Extractor
 
 ## To do list:
 ```
-- WAV creation for the decimated signal example (as suggested in the article)
-
 - Improve the structure of LT_Acoustic_Feature_Extractor.ipynb to compute PSD and SPL (and derived metrics) for both high- and low-frequency analyses, and then display the figures side by side. This will reduce the vertical space required in the notebook output preview.
 
 - Refactor and reorganize the functions in src/ to better group them by functionality and improve code maintainability.
