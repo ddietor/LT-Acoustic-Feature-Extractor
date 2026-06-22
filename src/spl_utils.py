@@ -43,7 +43,7 @@ def OctaveBandCalculation(freq,octave=1):
     
     if freq < fini:
         freq = fini
-        warnings.warn("WARNING from OctaveBandCalculation(): freq < fini. Solution: freq=fini")
+        warnings.warn("WARNING from OctaveBandCalculation(): freq < fini. Solution: freq=fini", UserWarning,stacklevel=2)
     
     Nbands = 55
     fcs = (fini*((2**(octave))**(np.arange(0, Nbands))))

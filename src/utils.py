@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
+import scipy as scp
 
 # %% Round2mult function:
 def Round2mult(num, mult, method='up'):
@@ -320,3 +321,35 @@ def curveReaderPSDdataCum(csv_file, column='Mean'):
     psd = df[column].to_numpy()
 
     return freq, psd
+
+# %% low_pass_filter function():
+def low_pass_filter(signal, cutoff_freq, sample_rate, order=4):
+    """
+    Apply a zero-phase Butterworth low-pass filter.
+
+    Parameters
+    ----------
+    signal : ndarray
+        Input signal.
+    cutoff_freq : float
+        Low-pass cutoff frequency [Hz].
+    sample_rate : float
+        Sampling frequency [Hz].
+    order : int, optional
+        Filter order.
+
+    Returns
+    -------
+    ndarray
+        Filtered signal.
+    """
+    nyquist = 0.5 * sample_rate
+    normalized_cutoff = cutoff_freq / nyquist
+
+    b, a = scp.signal.butter(
+        order,
+        normalized_cutoff,
+        btype="low"
+    )
+
+    return scp.signal.filtfilt(b, a, signal)

@@ -125,10 +125,8 @@ def wav_reader(
 
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", wavfile.WavFileWarning)
+        # Read WAV:
         fs, signal_samples = wavfile.read(str(wav_path))
-
-    # Read WAV
-    fs, signal_samples = wavfile.read(str(wav_path))
 
     # Normalize
     signal_norm = signal_samples.astype(np.float64) / (2 ** (Nbits - 1))
