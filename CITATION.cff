@@ -1,0 +1,76 @@
+cff-version: 1.2.0
+message: "If you use this repository or the methodology implemented here, please cite the associated research article."
+
+authors:
+
+* family-names: "Diego-Tortosa"
+  given-names: "Dídac"
+  orcid: "https://orcid.org/0000-0001-5546-3748"
+* family-names: "Bonanno"
+  given-names: "Danilo"
+  orcid: "https://orcid.org/0000-0003-0223-3580"
+* family-names: "Bou-Cabo"
+  given-names: "Manuel"
+  orcid: "https://orcid.org/0000-0002-0345-2462"
+* family-names: "Di Mauro"
+  given-names: "Letizia S."
+  orcid: "https://orcid.org/0000-0002-0678-7444"
+* family-names: "Idrissi"
+  given-names: "Abdelghani"
+  orcid: "https://orcid.org/0000-0001-8936-6364"
+* family-names: "Lara"
+  given-names: "Guillermo"
+  orcid: "https://orcid.org/0000-0001-5669-3297"
+* family-names: "Riccobene"
+  given-names: "Giorgio"
+  orcid: "https://orcid.org/0000-0002-0600-2774"
+* family-names: "Sanfilippo"
+  given-names: "Simone"
+  orcid: "https://orcid.org/0000-0001-5491-1705"
+* family-names: "Viola"
+  given-names: "Salvatore"
+  orcid: "https://orcid.org/0000-0001-9511-8279"
+
+title: "Effective Strategies for Automatic Analysis of Acoustic Signals in Long-Term Monitoring - Repository"
+version: 1.0.0
+date-released: 2026-06-22
+url: "https://github.com/ddietor/LT-Acoustic-Feature-Extractor"
+
+preferred-citation:
+type: article
+authors:
+- family-names: "Diego-Tortosa"
+given-names: "Dídac"
+orcid: "https://orcid.org/0000-0001-5546-3748"
+- family-names: "Bonanno"
+given-names: "Danilo"
+orcid: "https://orcid.org/0000-0003-0223-3580"
+- family-names: "Bou-Cabo"
+given-names: "Manuel"
+orcid: "https://orcid.org/0000-0002-0345-2462"
+- family-names: "Di Mauro"
+given-names: "Letizia S."
+orcid: "https://orcid.org/0000-0002-0678-7444"
+- family-names: "Idrissi"
+given-names: "Abdelghani"
+orcid: "https://orcid.org/0000-0001-8936-6364"
+- family-names: "Lara"
+given-names: "Guillermo"
+orcid: "https://orcid.org/0000-0001-5669-3297"
+- family-names: "Riccobene"
+given-names: "Giorgio"
+orcid: "https://orcid.org/0000-0002-0600-2774"
+- family-names: "Sanfilippo"
+given-names: "Simone"
+orcid: "https://orcid.org/0000-0001-5491-1705X"
+- family-names: "Viola"
+given-names: "Salvatore"
+orcid: "https://orcid.org/0000-0001-9511-8279"
+
+title: "Effective Strategies for Automatic Analysis of Acoustic Signals in Long-Term Monitoring"
+journal: "Journal of Marine Science and Engineering"
+year: 2025
+volume: 13
+issue: 3
+doi: "10.3390/jmse13030454"
+publisher: "MDPI AG"
