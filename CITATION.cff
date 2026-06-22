@@ -1,18 +1,27 @@
 cff-version: 1.2.0
-message: "If you use this repository or the methodology implemented here, please cite the associated research article."
-
+title: LT Acoustic Feature Extractor
+message: >-
+  If you use this repository or the methodology implemented
+  here, please cite the associated research article.
+type: software
 authors:
-
-* family-names: "Diego-Tortosa"
-  given-names: "Dídac"
-  orcid: "https://orcid.org/0000-0001-5546-3748"
-
-title: "LT Acoustic Feature Extractor"
-version: "1.0.0"
-date-released: 2026-06-15
-url: "https://github.com/ddietor/LT-Acoustic-Feature-Extractor"
-repository-code: "https://github.com/ddietor/LT-Acoustic-Feature-Extractor"
-license: "MIT"
+  - given-names: Dídac
+    family-names: Diego-Tortosa
+    orcid: 'https://orcid.org/0000-0001-5546-3748'
+identifiers:
+  - type: doi
+    value: 10.3390/jmse13030454
+repository-code: 'https://github.com/ddietor/LT-Acoustic-Feature-Extractor'
+keywords:
+  - underwater acoustics
+  - long-term studies
+  - passive acoustic monitoring
+  - signal processing
+  - spectrogram analysis
+  - sound pressure level
+  - data storage optimization
+license: MIT
+date-released: '2026-06-15'
 
 preferred-citation:
 type: article
