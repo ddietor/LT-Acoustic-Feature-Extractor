@@ -47,7 +47,7 @@ The processing pipeline implemented in this repository follows the workflow show
 
 The notebook first imports external dependencies and internal modules from `src/`.
 
-Then, a synthetic acoustic signal is generated using the script `scripts/generate_example_data.py` and saved as a WAV in the `outputs` directory.
+Then, a synthetic acoustic signal is generated using the script `scripts/generate_example_data.py` and saved as a WAV in the `results` directory.
  
 
 This signal emulates an experimental 5-minute hydrophone recording from the SMO-O𝜈DE-2 station, featuring a low-frequency spike that occurs below the 31 Hz third-octave band and lasts approximately 15 seconds.
