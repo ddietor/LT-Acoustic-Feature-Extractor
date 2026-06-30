@@ -30,7 +30,7 @@ pip install -r requirements.txt
 
 ## Main notebook
 
-The complete workflow is implemented in `LT_Acoustic_Feature_Extractor.ipyn`. 
+The complete workflow is implemented in `LT_Acoustic_Feature_Extractor.ipynb`. 
 This notebook serves as the main entry point of the project and executes all functionalities in a reproducible step-by-step manner.
 
 
@@ -96,7 +96,7 @@ LT_Acoustic_Feature_Extractor
 │
 ├── scripts/
 │ ├── init.py
-│ ├── earthqueake_envelope.txt
+│ ├── earthquake_envelope.txt
 │ └── generate_example_data.py
 │
 ├── src/

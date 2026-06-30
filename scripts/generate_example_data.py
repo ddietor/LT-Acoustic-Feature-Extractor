@@ -110,7 +110,7 @@ def run():
     tone75 = config_signal["tone_75k_amp"] * np.sin(2*np.pi*75e3*t + rng.uniform(0, 2*np.pi))
     tones_signal = tone50 + tone68 + tone75
 
-    envelope_read = np.loadtxt(r"C:\Users\Didac\Documents\ddietor\LT-Acoustic-Feature-Extractor\scripts\earthqueake_envelope.txt")
+    envelope_read = np.loadtxt(r"C:\Users\Didac\Documents\ddietor\LT-Acoustic-Feature-Extractor\scripts\earthquake_envelope.txt")
     fs_env = config_signal["fs_env"]
     t_env = np.arange(len(envelope_read)) / fs_env
 
