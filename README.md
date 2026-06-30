@@ -4,7 +4,7 @@ This project provides scripts to test Long-Term Acoustic Feature Extraction meth
 
 Diego-Tortosa, D.; Bonanno, D.; Bou-Cabo, M.; Di Mauro, L. S.; Idrissi, A.; Lara, G.; Riccobene, G.; Sanfilippo, S., & Viola, S. (2025). *Effective Strategies for Automatic Analysis of Acoustic Signals in Long-Term Monitoring*. Journal of Marine Science and Engineering, 13(3), 454. https://doi.org/10.3390/jmse13030454 
 
-If you use this repository in your research, a citation to this article would be appreciated.
+If you use this repository in your research, a citation to the article would be appreciated.
 
 ## Requirements
 After cloning the repository:
@@ -105,7 +105,7 @@ LT_Acoustic_Feature_Extractor
 │ ├── wav_io.py
 │ └── utils.py
 │
-…   # Default directory for the pipelina outputs
+…   # Default directory for the pipeline outputs
 │
 └── results/
 
