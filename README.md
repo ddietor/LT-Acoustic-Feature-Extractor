@@ -92,6 +92,7 @@ LT_Acoustic_Feature_Extractor
 ├── LT_Acoustic_Feature_Extractor.ipynb # Main example notebook (runs the full pipeline)
 ├── .gitignore
 ├── requirements.txt
+├── CITATION.cff            
 │
 ├── scripts/
 │ ├── init.py
