@@ -3,7 +3,7 @@
  <p>
     <a href="https://github.com/ddietor/LT-Acoustic-Feature-Extractor/releases"><img src="https://img.shields.io/badge/release-v1.0.0-red" alt="Latest Release"/></a>
     <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.11%2B-blue" alt="Python 3.11+"/></a>
-    <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT License"/></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-lightgrey" alt="MIT License"/></a>
     <a href="https://doi.org/10.3390/jmse13030454"><img src="https://img.shields.io/badge/Article-DOI-green" alt="Article DOI"/></a>
     <a href="https://doi.org/10.5281/zenodo.21072180"><img src="https://img.shields.io/badge/Software-DOI-green" alt="Software DOI"/></a>
   </p>
